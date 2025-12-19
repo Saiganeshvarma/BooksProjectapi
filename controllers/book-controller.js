@@ -1,4 +1,5 @@
 var book = require("../model/books")
+
 var getAllBooks = async(req,res)=>{
     var allBooks = await book.find()
     res.status(200).json({allBooks})
@@ -21,6 +22,40 @@ var getSingleBook = async(req,res)=>{
     res.status(200).json({singleBook})
 }
 
+var updateNewBook = async(req,res)=>{
+    try{
+        var bookId = req.params.id 
+        var updatedBook = await book.findByIdAndUpdate(bookId,{
+            title : req.body.title,
+            name : req.body.name,
+            author : req.body.author,
+            price : req.body.price
+
+
+        })
+        res.status(201).json({message : "book updated",a :updatedBook})
+
+
+    }catch(error){
+        console.log("error",error);
+    }
+}
+
+var deleteBook = async(req,res)=>{
+    try{
+        var bookId = req.params.id 
+        var deletedBook = await book.findByIdAndDelete(bookId)
+        res.status(200).json({message : "Book deleted"})
+
+    }catch(error){
+        console.log("error",error);
+    }
+}
+
+
+
+
+
 module.exports = {
-    getAllBooks,createNewBook,getSingleBook
+    getAllBooks,createNewBook,getSingleBook,updateNewBook,deleteBook
 }
