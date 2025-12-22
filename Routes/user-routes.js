@@ -1,5 +1,5 @@
 var express = require("express")
-const { registerUser } = require("../controllers/user-controller")
+const { registerUser, loginUser } = require("../controllers/user-controller")
 
 var router = express.Router()
 
@@ -7,6 +7,11 @@ var router = express.Router()
 
 router.post("/register",registerUser)
 
+
 // login route
+
+router.post("/login",loginUser)
+
+
 
 module.exports = router

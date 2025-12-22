@@ -1,7 +1,6 @@
 var user = require("../model/user")
-
 var byCrpt = require("bcryptjs")
-
+var jwt = require("jsonwebtoken")
 
 // register controller
 
@@ -39,7 +38,37 @@ var registerUser = async(req,res)=>{
 
 }
 
+//login controller
+
+var loginUser = async(req,res)=>{
+    try{
+        var {username,password} = req.body 
+        var checkUser = await user.findOne({username})
+        if(!checkUser){
+            return res.status(200).json({message : "invalid user credentails"})
+        }
+        var comparePassword = await byCrpt.compare(password,checkUser.password)
+        if(!comparePassword){
+            return res.status(200).json({message : "invalid credentials"})
+        }
+        var token = jwt.sign({
+            userid : checkUser._id,
+            username : checkUser.username,
+            role : checkUser.role 
+
+        },process.env.JWT_TOKEN,{expiresIn : "1d"})
+
+        res.status(200).json({message : "login sucessfull",myToken : token})
+
+
+
+    }catch(error){
+        console.log("error",error);
+    }
+}
+
+
 
 module.exports = {
-    registerUser
+    registerUser,loginUser
 }
