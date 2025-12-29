@@ -1,5 +1,6 @@
 var express = require("express")
 const {getAllBooks,createNewBook,getSingleBook, updateNewBook, deleteBook}= require("../controllers/book-controller")
+const authMiddleware = require("../middleware/auth-middleware")
 
 var router = express.Router()
 
