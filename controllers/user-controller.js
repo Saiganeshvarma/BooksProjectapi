@@ -1,5 +1,5 @@
 var user = require("../model/user")
-var byCrpt = require("bcryptjs")
+var byCrpt = require("bcrypt")
 var jwt = require("jsonwebtoken")
 
 // register controller

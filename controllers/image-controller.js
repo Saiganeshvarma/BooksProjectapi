@@ -26,7 +26,18 @@ var uploadImage = async(req,res)=>{
     }
 }
 
+var getAllImages = async(req,res)=>{
+    try{
+        var allImages = await image.find()
+        res.status(200).json({allImages})
+
+    }catch(error){
+        console.log("error",error);
+    }
+}
+
+
 
 module.exports = {
-    uploadImage
+    uploadImage,getAllImages
 }
